@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Function to detect Linux distribution
+detect_distro() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            echo "Ubuntu/Debian detected"
+        elif [ "$ID" = "fedora" ]; then
+            echo "Fedora detected"
+        elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
+            echo "Arch/Manjaro detected"
+        else
+            echo "Unsupported distribution"
+            exit 1
+        fi
+    else
+        echo "Unsupported distribution"
+        exit 1
+    fi
+}
+
+# Function to install Sway
+install_sway() {
+    case "$(detect_distro)" in
+        "Ubuntu/Debian" | "Fedora" | "Arch/Manjaro")
+            echo "Installing Sway..."
+            # Add installation commands for Sway on different distributions here
+            ;;
+        *)
+            echo "Unsupported distribution for Sway installation"
+            ;;
+    esac
+}
+
+# Function to install Hyprland
+install_hyprland() {
+    case "$(detect_distro)" in
+        "Ubuntu/Debian" | "Fedora" | "Arch/Manjaro")
+            echo "Installing Hyprland..."
+            # Add installation commands for Hyprland on different distributions here
+            ;;
+        *)
+            echo "Unsupported distribution for Hyprland installation"
+            ;;
+    esac
+}
+
+# Display menu
+echo "Select an option:"
+echo "0. Exit"
+echo "1. Install Sway"
+echo "2. Install Hyprland"
+
+# Read user choice
+read -p "Enter your choice: " choice
+
+# Handle user choice
+case $choice in
+    0) echo "Exiting..." ;;
+    1) install_sway ;;
+    2) install_hyprland ;;
+    *) echo "Invalid choice. Exiting..." ;;
+esac
